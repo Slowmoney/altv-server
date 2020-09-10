@@ -22,7 +22,6 @@ function toggleEngine(player, data) {
     if (vehicle.fuel <= 0) {
         vehicle.isEngineOn = false;
         vehicle.setSyncedMeta('fuel', 0);
-        player.send(`{FFFF00} You are out of fuel.`);
     }
     alt.emitClient(player, 'vehicle:StartEngine', vehicle.isEngineOn);
 }
@@ -33,6 +32,7 @@ chat.registerCmd('te', (player) => alt.emitClient(player,'vehicle:ToggleEngine')
 function newVeh(player) {
       try {
           const vehicle = new alt.Vehicle('exemplar', player.pos.x, player.pos.y, player.pos.z, 0, 0, 0)
+          vehicle.fuel = 100
           vehicle.setSyncedMeta('fuel', 100);
     } catch (error) {
         alt.log(error)

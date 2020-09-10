@@ -11,12 +11,11 @@
 <body>
     <div id="app">
         <div class="container" v-show="show">
-            <div>
-                <div>Speed:<input type="text" v-model="speed"></div>
-                <div>Gear:<input type="text" v-model="gear"></div>
-                <div>Rpm:<input type="text" v-model="rpm"></div>
+            <div class="panel">
+                <div ref="rpm" class="panel-rpm"><div class="panel-gear">{{gear}}</div></div>
             </div>
-            <div>Fuel:<input type="text" v-model="fuel"></div>
+            <div class="panel-speed">Speed:{{speed}}</div>
+            <div class="panel-fuel">Fuel:{{fuel}}</div>
         </div>
 
     </div>

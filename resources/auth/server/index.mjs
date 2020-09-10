@@ -59,7 +59,7 @@ async function handleRegister(player, username, password, email) {
         username,
         email,
         password: bcrypt.hashSync(password, 8) 
-    })
+    }
     const dbData = await db.insertData(data, 'accounts', true)
     alt.emitClient(player, 'auth:Done', 'Регистрация выполнена');
     await handleLogin(...arguments)

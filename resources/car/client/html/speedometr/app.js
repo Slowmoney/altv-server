@@ -5,7 +5,7 @@ const app = new Vue({
     el: '#app',
     data() {
         return {
-            show: false,
+            show: true,
             speed:0,
             gear:0,
             rpm:0,
@@ -14,6 +14,7 @@ const app = new Vue({
         };
     },
     mounted() {
+        
         
         if ('alt' in window) {
             alt.on('speedometr:show', (e) => {
@@ -24,7 +25,17 @@ const app = new Vue({
                 this.speed = speed;
                 this.gear = gear;
                 this.rpm = rpm;
-               
+                
+                this.$refs.rpm.style.height = this.rpm*150+'px'
+                if (this.rpm>0.9) {
+                    this.$refs.rpm.style.backgroundColor = '#ff5722'
+                }else if (this.rpm > 0.3) {
+                    this.$refs.rpm.style.backgroundColor = '#ff9800'
+                }else{
+                    this.$refs.rpm.style.backgroundColor = '#8bc34a'
+                    
+                }
+
             })
             alt.on('speedometr:drawFuel',(fuel)=>{
                 this.fuel=fuel

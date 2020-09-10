@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AUTH</title>
+    <link rel="stylesheet/less" type="text/css" href="./style.less" />
+</head>
+
+<body>
+    <div id="app">
+        <div class="container" v-show="show">
+            <p v-if="errors.length">
+                <b>Пожалуйста исправьте указанные ошибки:</b>
+            <ul>
+                <li v-for="error in errors">{{ error }}</li>
+            </ul>
+            </p>
+            <div class="login" v-if="!registration">
+                <div>
+                    <label >Имя пользователя</label>
+                    <input tabindex="1" type="text" id="username" placeholder="Имя пользователя" class="username" v-model="username" ref="username" >
+                </div>
+                <div>
+                    <label >Пароль</label>
+                    <input type="password" placeholder="Пароль" id="pass" ref="pass" class="pass" v-model="pass" >
+                </div>
+                <button class="user_new" @click="toRegister(true)">Новый пользователь</button>
+                <button class="auth" @click="login()">Вход</button>
+            </div>
+            <div class="register" v-if="registration">
+                <div>
+                    <label >Имя пользователя</label>
+                    <input  tabindex="1" type="text" placeholder="Имя пользователя" class="register-username" ref="name" v-model="username">
+                </div>
+                <div>
+                    <label>Email</label>
+                    <input type="email" placeholder="Email" class="register-email" ref="email" v-model="email">
+                </div>
+                <div>
+                    <label >Пароль</label>
+                    <input type="text" placeholder="Пароль" class="register-password1" ref="pass1" v-model="pass1">
+                </div>
+                <div>
+                    <label >Повторить пароль</label>
+                    <input type="text" placeholder="Повторить пароль" class="register-password2" ref="pass2" v-model="pass2">
+                </div>
+
+                <button @click="login()" class="register-register" >Зарегистрироваться</button>
+                <hr>
+                <button class="register-login" @click="toRegister(false)">Войти</button>
+            </div>
+
+        </div>
+        <script src="../vue.min.js"></script>
+        <script src="../less.min.js"></script>
+        <script src="./app.js" type="text/javascript"></script>
+</body>
+
+</html>

@@ -6,25 +6,25 @@ alt.Vehicle.prototype.updateFuel = function updateFuel(player) {
         this.lastpos = this.pos
     }
     let dist = distance(this.pos, this.lastpos)
-   
-        currentFuel -= dist
-    this.lastpos = this.pos 
-     
-    
-    if (currentFuel <= 0 ) {
+
+    currentFuel -= dist
+    this.lastpos = this.pos
+
+
+    if (currentFuel <= 0) {
         alt.emitClient(null, 'vehicle:KillEngine', this);
         currentFuel = 0
         //currentEngineOn = false;
     }
-  
-   // this.isEngineOn = currentEngineOn
+
+    // this.isEngineOn = currentEngineOn
     this.fuel = currentFuel
 }
 alt.Vehicle.prototype.fillFuel = function fillFuel(player) {
     this.fuel = 1000
 }
 
-function distance(p1,p2){
+function distance(p1, p2) {
     return Math.sqrt((p2.x - p1.x) ** 2 + (p2.y - p1.y) ** 2 + (p2.z - p1.z) ** 2)
 }
 Object.defineProperty(alt.Vehicle.prototype, "fuel", {
@@ -73,6 +73,6 @@ Object.defineProperty(alt.Vehicle.prototype, "lastpos", {
 });
 
 
-alt.onClient('updateFuel', (player,vehicle) => {
+alt.onClient('updateFuel', (player, vehicle) => {
     vehicle.updateFuel(player)
 });

@@ -5,12 +5,13 @@ const app = new Vue({
     el: '#app',
     data() {
         return {
-            show: false,
+            show: true,
             speed:0,
             gear:0,
             rpm:0,
-            fuel:0,
-            isEngineOn:true
+            fuel:100,
+            isEngineOn:true,
+            baseFuel:1000
         };
     },
     mounted() {
@@ -22,11 +23,11 @@ const app = new Vue({
                 e ? alt.emit('speedometr:showed') : alt.emit('speedometr:hide')
             });
             alt.on('speedometr:draw', (speed, gear, rpm, isEngineOn) => {
-                this.speed = ((speed != undefined ? speed : 0) * 3.6).toFixed(2);
+                this.speed = ((speed != undefined ? speed : 0) * 3.6).toFixed(1);
                 this.gear = gear!=undefined ? gear : 'N';
                 this.rpm = rpm != undefined ? rpm : 0;
                 this.isEngineOn = isEngineOn
-                this.$refs.rpm.style.height = this.rpm*150+'px'
+                this.$refs.rpm.style.height = this.rpm*175+'px'
                 if (this.rpm>0.9) {
                     this.$refs.rpm.style.backgroundColor = '#ff5722'
                 }else if (this.rpm > 0.3) {
@@ -37,8 +38,10 @@ const app = new Vue({
                 }
 
             })
-            alt.on('speedometr:drawFuel',(fuel)=>{
+            alt.on('speedometr:drawFuel',(fuel,baseFuel)=>{
                 this.fuel=fuel
+                this.baseFuel = baseFuel ? baseFuel:10000
+                this.$refs.fuel.style.height = (this.fuel / this.baseFuel)*100+'px'
             })
         }
     },

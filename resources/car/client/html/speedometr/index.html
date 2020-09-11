@@ -11,14 +11,18 @@
 <body>
     <div id="app">
         <div class="container" v-show="show">
-            <div class="panel">
-                <div  ref="rpm" class="panel-rpm"><div class="panel-gear">{{gear}}</div></div>
+            <div class="fuel">
+                <div class="fuel-block">
+                    <div ref="fuel" class="fuel-block__vline"></div>
+                </div>
             </div>
-            <div class="panel-speed">Speed:{{speed}}</div>
-            <div class="panel-fuel">Fuel:{{fuel.toFixed(2)}}</div>
-            <div>{{isEngineOn}}</div>
+            <div class="panel">
+                <div ref="rpm" class="panel-rpm">
+                    <div class="panel-speed">{{speed}}</div>
+                    <div class="panel-gear">{{gear}}</div>
+                </div>
+            </div>
         </div>
-
     </div>
     <script src="../vue.min.js"></script>
     <script src="../less.min.js"></script>

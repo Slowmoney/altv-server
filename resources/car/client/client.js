@@ -1,7 +1,6 @@
 
 import alt from 'alt';
 import * as native from 'natives';
-import chat from "chat";
 const url = `http://resource/client/html/speedometr/index.html`;
 const urlengine = `http://resource/client/html/engine/index.html`;
 let view = new alt.WebView(url);
@@ -9,7 +8,7 @@ let viewengine = new alt.WebView(urlengine);
 let show = false;
 let showengine = false;
 let playerVehicle = false;
-
+let baseFuel = 0;
 alt.setInterval(() => {
     if (!playerVehicle) {
         return;
@@ -27,7 +26,7 @@ alt.setInterval(() => {
     }
     if (show) {
          
-        view.emit('speedometr:drawFuel', playerVehicle.getSyncedMeta('fuel'));
+        view.emit('speedometr:drawFuel', playerVehicle.getSyncedMeta('fuel'), playerVehicle.getSyncedMeta('baseFuel'));
         alt.emitServer('updateFuel', playerVehicle)
     }
 
@@ -44,6 +43,7 @@ alt.onServer('playerEnteredVehicle', (vehicle, seat) => {
     alt.log('playerEnteredVehicle')
     native.setVehicleEngineOn(alt.Player.local.vehicle.scriptID, false, false, true);
     playerVehicle = vehicle;
+    
     (seat == 1) && !show && view.emit('speedometr:show', true);
 });
 alt.onServer('playerLeftVehicle', (vehicle, seat) => {
@@ -56,6 +56,7 @@ alt.onServer('playerLeftVehicle', (vehicle, seat) => {
 alt.onServer('playerChangedVehicleSeat', (vehicle, seat) => {
     alt.log('playerChangedVehicleSeat')
     playerVehicle = vehicle;
+   
     (seat == 1) && !show && view.emit('speedometr:show', true);
 });
 

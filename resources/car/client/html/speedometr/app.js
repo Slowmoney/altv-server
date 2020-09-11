@@ -5,7 +5,7 @@ const app = new Vue({
     el: '#app',
     data() {
         return {
-            show: true,
+            show: false,
             speed:0,
             gear:0,
             rpm:0,
@@ -22,9 +22,9 @@ const app = new Vue({
                 e ? alt.emit('speedometr:showed') : alt.emit('speedometr:hide')
             });
             alt.on('speedometr:draw', (speed, gear, rpm) => {
-                this.speed = speed;
-                this.gear = gear;
-                this.rpm = rpm;
+                this.speed = ((speed != undefined ? speed : 0) * 3.6).toFixed(2);
+                this.gear = gear!=undefined ? gear : 'N';
+                this.rpm = rpm != undefined ? rpm : 0;
                 
                 this.$refs.rpm.style.height = this.rpm*150+'px'
                 if (this.rpm>0.9) {

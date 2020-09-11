@@ -1,6 +1,7 @@
 
 import alt from 'alt';
 import * as native from 'natives';
+
 const url = `http://resource/client/html/speedometr/index.html`;
 const urlengine = `http://resource/client/html/engine/index.html`;
 let view = new alt.WebView(url);
@@ -14,14 +15,21 @@ alt.setInterval(() => {
         return;
     }
     if (show) {
-        view.emit('speedometr:drawFuel', 100);
-        
-        view.emit('speedometr:draw', playerVehicle.speed, playerVehicle.gear, playerVehicle.rpm);
+        view.emit('speedometr:draw', native.getEntitySpeed(playerVehicle.scriptID), playerVehicle.gear, playerVehicle.rpm);
     }
 
 }, 1);
 
+alt.setInterval(() => {
+    if (!playerVehicle) {
+        return;
+    }
+    if (show) {
+        view.emit('speedometr:drawFuel', playerVehicle.getSyncedMeta('fuel'));
+        alt.emitServer('updateFuel', playerVehicle)
+    }
 
+}, 100);
 
 view.on('speedometr:showed', () => {
     show = true
@@ -50,7 +58,7 @@ alt.onServer('playerChangedVehicleSeat', (vehicle, seat) => {
 });
 alt.onServer('vehicle:ToggleEngine', toggleEngine)
 alt.onServer('vehicle:StartEngine', startEngine)
-
+alt.onServer('vehicle:KillEngine', killEngine)
 viewengine.on('engine:toggle', toggleEngine)
 viewengine.on('engine:showed', () => {
     showengine = true
@@ -86,6 +94,11 @@ function toggleEngine() {
 function startEngine(value) {
     if (!alt.Player.local.vehicle) return;
     native.setVehicleEngineOn(alt.Player.local.vehicle.scriptID, value, false, true);
+    playerVehicle = alt.Player.local.vehicle;
+    
+}
+function killEngine(vehicle) {
+    native.setVehicleEngineOn(vehicle.scriptID, false, true, false)
 }
 function showCursor(state) {
     try {

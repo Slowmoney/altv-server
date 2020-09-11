@@ -5,7 +5,7 @@ const app = new Vue({
     el: '#app',
     data() {
         return {
-            show: true,
+            show: false,
             speed:0,
             gear:0,
             rpm:0,

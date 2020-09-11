@@ -20,9 +20,7 @@ function toggleEngine(player, data) {
     const vehicle = data.vehicle;
     if (!player.vehicle) return;
     let currentEngineOn = vehicle.isEngineOn
-    alt.log(currentEngineOn)
     currentEngineOn = !currentEngineOn ? true : !currentEngineOn;
-    alt.log(currentEngineOn)
     if (vehicle.fuel <= 0) {
         currentEngineOn = false;
         vehicle.fuel =0;
@@ -30,8 +28,6 @@ function toggleEngine(player, data) {
     }
     alt.log('toggleEngine', currentEngineOn, vehicle.fuel)
     alt.emitClient(player, 'vehicle:StartEngine', currentEngineOn);
-   // vehicle.isEngineOn = currentEngineOn
-   // alt.log(currentEngineOn, vehicle.isEngineOn)
 }
 chat.registerCmd('fuel', player => {
     if (player.vehicle) {

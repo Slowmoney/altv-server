@@ -6,9 +6,9 @@ const urlengine = `http://resource/client/html/engine/index.html`;
 let view = new alt.WebView(url);
 let viewengine = new alt.WebView(urlengine);
 let show = false;
-let showengine = false;
+
 let playerVehicle = false;
-let baseFuel = 0;
+
 alt.setInterval(() => {
     if (!playerVehicle) {
         return;

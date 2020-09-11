@@ -12,10 +12,11 @@
     <div id="app">
         <div class="container" v-show="show">
             <div class="panel">
-                <div ref="rpm" class="panel-rpm"><div class="panel-gear">{{gear}}</div></div>
+                <div  ref="rpm" class="panel-rpm"><div class="panel-gear">{{gear}}</div></div>
             </div>
             <div class="panel-speed">Speed:{{speed}}</div>
-            <div class="panel-fuel">Fuel:{{fuel}}</div>
+            <div class="panel-fuel">Fuel:{{fuel.toFixed(2)}}</div>
+            <div>{{isEngineOn}}</div>
         </div>
 
     </div>

@@ -19,24 +19,35 @@ alt.onClient('vehicle:ToggleEngine', toggleEngine);
 function toggleEngine(player, data) {
     const vehicle = data.vehicle;
     if (!player.vehicle) return;
-    vehicle.isEngineOn = !vehicle.isEngineOn ? true : !vehicle.isEngineOn;
+    let currentEngineOn = vehicle.isEngineOn
+    alt.log(currentEngineOn)
+    currentEngineOn = !currentEngineOn ? true : !currentEngineOn;
+    alt.log(currentEngineOn)
     if (vehicle.fuel <= 0) {
-        vehicle.isEngineOn = false;
+        currentEngineOn = false;
         vehicle.fuel =0;
+        return
     }
-    alt.log('toggleEngine', vehicle.isEngineOn, vehicle.fuel)
-    alt.emitClient(player, 'vehicle:StartEngine', vehicle.isEngineOn);
+    alt.log('toggleEngine', currentEngineOn, vehicle.fuel)
+    alt.emitClient(player, 'vehicle:StartEngine', currentEngineOn);
+   // vehicle.isEngineOn = currentEngineOn
+   // alt.log(currentEngineOn, vehicle.isEngineOn)
 }
-
+chat.registerCmd('fuel', player => {
+    if (player.vehicle) {
+        player.vehicle.fillFuel()
+    }
+    
+})
 chat.registerCmd('veh',player=>newVeh(player))
 chat.registerCmd('te', (player) => alt.emitClient(player,'vehicle:ToggleEngine'))
 
 function newVeh(player) {
       try {
           const vehicle = new alt.Vehicle('exemplar', player.pos.x, player.pos.y, player.pos.z, 0, 0, 0)
-          vehicle.fuel = 10
-          
-          vehicle.basefuel = 100
+          vehicle.fuel = 100
+          vehicle.isEngineOn = false
+          vehicle.basefuel = 10000
           
     } catch (error) {
         alt.log(error)
